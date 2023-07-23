@@ -2,6 +2,8 @@ const express = require("express");
 const http = require("http");
 const socketIO = require("socket.io");
 const path = require("path");
+//const { getWinner } = require("./src/helpers/getWinner");
+const { getWinner } = require("./src/helpers/rpsGame");
 
 const app = express();
 const server = http.createServer(app);
@@ -12,6 +14,10 @@ const port = process.env.PORT || 3000;
 
 // Middleware to serve static files from the "public" folder
 app.use(express.static(path.join(__dirname, "src/public")));
+
+//To fetch json body
+//app.use(express.json());
+//app.use(express.urlencoded({ extended: true }));
 
 //DB connection
 const dbPath = path.join(__dirname, "src/db/db.json");

@@ -1,4 +1,4 @@
-export const getWinner = (playerChoice, opponentChoice) => {
+const getWinner = (playerChoice, opponentChoice) => {
   if (playerChoice === opponentChoice) {
     return "It's a tie!";
   } else if (
@@ -11,3 +11,5 @@ export const getWinner = (playerChoice, opponentChoice) => {
     return "You lose!";
   }
 };
+
+module.exports = { getWinner };
