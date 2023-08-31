@@ -1,6 +1,6 @@
-const socket = io();
-var roomId = 10,
-  usrName = 10;
+var roomId, usrName, userId;
+userId = generateId(1, 99);
+const socket = io("http://127.0.0.1:3000", { query: { user_id: userId } });
 const resultDiv = document.getElementById("result");
 
 function joinRoom() {
@@ -16,16 +16,25 @@ function joinRoom() {
 }
 
 function choose(sel) {
-  resultDiv.innerHTML = "";
-  let params = { room: roomId, usr: usrName, choice: sel };
+  resultDiv.innerHTML = "You have selected " + sel + "!!!";
+  let params = { room: roomId, usr: usrName, choice: sel, id: userId };
   socket.emit("choose", params);
 }
 
-socket.on("result", (data) => {
-  const { p1, p2, result } = data;
-  resultDiv.innerHTML = `You chose ${p1}. Opponent chose ${p2}. ${result}`;
+function clearDiv() {
+  console.log("ClearDiv");
+  resultDiv.innerHTML = "";
+}
+
+socket.on("result", (result) => {
+  console.log(result);
+  resultDiv.innerHTML = result;
 });
 
 socket.on("roomFull", () => {
   resultDiv.innerHTML = "Sorry, the room is full";
 });
+
+function generateId(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
